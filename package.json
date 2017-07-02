@@ -1,0 +1,19 @@
+{
+  "name": "YelpCamp",
+  "version": "1.0.0",
+  "description": "YelpCamp",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hamed Ghafarshad",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3"
+  },
+  "engines":{
+    "node": "0.10.32"
+  }
+
+}
