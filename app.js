@@ -21,8 +21,10 @@ app.get("/campgrounds", function(req, res){
 
 });
 
+app.set('port', (process.env.PORT || 5000 ));
+
 //Server is ran on port 8080
-app.listen(process.env.PORT || 8080, function(){
+app.listen(app.get('port'), function(){
     console.log("YelpCamp Server Has Started!");
 });
 

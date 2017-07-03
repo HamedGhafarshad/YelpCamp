@@ -4,7 +4,8 @@
   "description": "YelpCamp",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+     "start": "node app.js",
+     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hamed Ghafarshad",
   "license": "ISC",
@@ -13,7 +14,8 @@
     "express": "^4.15.3"
   },
   "engines":{
-    "node": "0.10.32"
+    "node": "0.10.32",
+    "npm": "1.4.28"
   }
 
 }
