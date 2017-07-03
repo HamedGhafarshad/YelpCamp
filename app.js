@@ -21,10 +21,16 @@ app.get("/campgrounds", function(req, res){
 
 });
 
-app.set('port', (process.env.PORT || 5000 ));
+//Activated when user completes new campground form
+app.post("/campgrounds", function(req, res){
+    res.send("You hit the POST");
+    // get data from form and add to campgrounds array
+    // redirect back to campgrounds route
+
+});
 
 //Server is ran on port 8080
-app.listen(app.get('port'), function(){
+app.listen(process.env.PORT || 8888, function(){
     console.log("YelpCamp Server Has Started!");
 });
 
