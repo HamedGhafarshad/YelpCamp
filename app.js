@@ -1,5 +1,9 @@
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
+
+//Setting up bodyParser
+app.use(bodyParser.urlencoded({extended: true}));
 
 //Don't use EJS suffix when calling res.render()
 app.set("view engine", "ejs");
@@ -18,6 +22,11 @@ app.get("/campgrounds", function(req, res){
         {name: "Mountain Goat's Rest", image: "https://farm4.staticflickr.com/3273/2602356334_20fbb23543.jpg"}
     ]
     res.render("campgrounds", {campgrounds:campgrounds});
+
+});
+
+app.get("/campgrounds/new", function(req, res){
+    res.render("new.ejs");
 
 });
 
