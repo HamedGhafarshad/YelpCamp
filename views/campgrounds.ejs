@@ -4,10 +4,12 @@
 
     <header class = "jumbotron"> <!-- Makes the text larger,stretches it and adds a background -->
 
-        <h1>This is the campgrounds page!</h1>
-
+        <h1>Welcome to YelpCamp!</h1>
+        <p>View our hand-picked campgrounds from all over the world</p>
+        <p>
+         <a class = "btn btn-primary btn-large" href ="/campgrounds/new">Add New Campground</a>
+        <p>
     </header> <!--Same as div -->
-    <a href ="/campgrounds/new">Add New Campground</a>
 
     <% campgrounds.forEach(function(campground){ %> <!--Javascript to iterate through campgrounds array and display images --!>
         <div>
