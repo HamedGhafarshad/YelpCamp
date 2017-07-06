@@ -15,9 +15,13 @@
     <div class = "row"> <!-- Images will go here -->
       <% campgrounds.forEach(function(campground){ %> <!--Javascript to iterate through campgrounds array and display images --!>
               <div class="col-md-3 col-sm-6"> <!-- Starts with 4 images per row, then goes down to 2 images per row, then 1 image per row -->
-                <div class="thumbnail">
+                 <div class="thumbnail"> <!--Holds the thumbnail -->
                     <img src = "<%= campground.image %>">
-                </div> 
+                    <div class = "caption"> <!-- Holds the caption -->
+                        <h4><%= campground.name %></h4>
+                        
+                    </div>
+                  </div> 
               </div>
 
         <% }); %>
