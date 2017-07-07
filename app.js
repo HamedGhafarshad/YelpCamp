@@ -48,7 +48,7 @@ app.post("/campgrounds", function(req, res){
     res.redirect("/campgrounds");
 });
 
-//Server is ran on port 8080
+//Server is ran on port 8888
 app.listen(process.env.PORT || 8888, function(){
     console.log("YelpCamp Server Has Started!");
 });
