@@ -20,10 +20,12 @@
                     <img src = "<%= campground.image %>">
                     <div class = "caption"> <!-- Holds the caption -->
                         <h4><%= campground.name %></h4>
-                        
                     </div>
-                  </div> 
-              </div>
+                    <p>
+                        <a href="/campgrounds/<%= campground._id %>" class = "btn btn-primary">More Info</a>
+                    </p>
+                  </div> <!-- End of thumbnail --> 
+              </div>  <!-- End of column -->
 
         <% }); %>
     </div>
