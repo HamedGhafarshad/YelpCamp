@@ -3,7 +3,10 @@ var express = require("express"),
               bodyParser = require("body-parser");
               mongoose = require("mongoose");
 
-var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/yelp_camp';
+//var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/yelp_camp';
+
+var uristring = "mongodb://heroku_nlrbc8sq:re5qmvtb4biesrgdgn3codkfpp@ds163612.mlab.com:63612/heroku_nlrbc8sq";
+
 var theport = process.env.PORT || 8888;
 
 /*
