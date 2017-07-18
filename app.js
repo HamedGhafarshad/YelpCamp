@@ -2,6 +2,10 @@ var express = require("express"),
               app = express()
               bodyParser = require("body-parser");
               mongoose = require("mongoose");
+
+var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/yelp_camp';
+var theport = process.env.PORT || 8888;
+
 /*
 var campgrounds = [
         {name: "Salmon Creek", image: "https://farm4.staticflickr.com/3751/9580653400_e1509d6696.jpg"},
@@ -12,8 +16,20 @@ var campgrounds = [
         {name: "Mountain Goat's Rest", image: "https://farm4.staticflickr.com/3273/2602356334_20fbb23543.jpg"}
     ]
 */
-//Connecting to our database, will create db if none exists
-mongoose.connect("mongodb://localhost/yelp_camp");
+
+//mongoose.Promise = global.Promise
+
+//Connecting to our database, will create db if none exist
+
+//mongoose.connect("mongodb://localhost/yelp_camp");
+mongoose.connect(uristring, function(err, res){
+    if(err){
+        console.log("error");
+    }else{
+        console.log("Success");
+    }
+});
+
 
 //Setting up bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
