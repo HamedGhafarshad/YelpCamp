@@ -5,7 +5,9 @@ var express = require("express"),
 
 //var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/yelp_camp';
 
-var uristring = "mongodb://heroku_nlrbc8sq:re5qmvtb4biesrgdgn3codkfpp@ds163612.mlab.com:63612/heroku_nlrbc8sq";
+//var uristring = "mongodb://heroku_nlrbc8sq:re5qmvtb4biesrgdgn3codkfpp@ds163612.mlab.com:63612/heroku_nlrbc8sq";
+
+var uristring = "mongodb://hghafars:trunks123@ds163612.mlab.com:63612/yelp_camp"
 
 var theport = process.env.PORT || 8888;
 
