@@ -1,15 +1,14 @@
-var express = require("express"),
-              app = express()
-              bodyParser = require("body-parser");
-              mongoose = require("mongoose");
+var express = require("express");
+var app = express();
+var bodyParser = require("body-parser");
+var mongoose = require("mongoose");
+var Campground = require("./models/campground.js")
 
 //var uristring = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/yelp_camp';
 
 //var uristring = "mongodb://heroku_nlrbc8sq:re5qmvtb4biesrgdgn3codkfpp@ds163612.mlab.com:63612/heroku_nlrbc8sq";
 
 var uristring = "mongodb://hghafars:trunks123@ds163612.mlab.com:63612/yelp_camp"
-
-var theport = process.env.PORT || 8888;
 
 /*
 var campgrounds = [
@@ -43,13 +42,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 // Schema Setup(should be broken into seperate files later)
+/* exported from models
 var campgroundSchema = new mongoose.Schema({
     name: String,
     image: String,
     description: String
 });
+
 //Compiles a model from the schema 
 var Campground = mongoose.model("Campground", campgroundSchema);
+*/
 /*
 Campground.create(
         { 
