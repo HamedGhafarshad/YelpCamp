@@ -2,9 +2,9 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
-var Campground = require("./models/campground.js");
+var Campground = require("./models/campground");
 var seedDB = require("./seeds");
-
+var Comment = require("./models/comment");
 seedDB();
 
 
@@ -13,15 +13,17 @@ var uristring = "mongodb://hghafars:trunks123@ds163612.mlab.com:63612/yelp_camp"
 
 //Connecting to our database, will create db if none exist
 
-//mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect(uristring, function(err, res){
+mongoose.connect("mongodb://localhost/yelp_camp");
+
+
+/*mongoose.connect(uristring, function(err, res){
     if(err){
         console.log("error");
     }else{
         console.log("Success");
     }
 });
-
+*/
 
 //Setting up bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -44,14 +46,14 @@ app.get("/campgrounds", function(req, res){
         if(err){
             console.log(err);
         }else{
-            res.render("index", {campgrounds:allCampgrounds});
+            res.render("campgrounds/index", {campgrounds:allCampgrounds});
         }
     });
 });
 
 //New route
 app.get("/campgrounds/new", function(req, res){
-    res.render("new");
+    res.render("campgrounds/new");
 
 });
 
@@ -63,7 +65,7 @@ app.get("/campgrounds/:id", function(req, res){
         } else{
 	    console.log(foundCampground);
             //render show tempalte with that campground
-            res.render("show", {campground: foundCampground});
+            res.render("campgrounds/show", {campground: foundCampground});
 	}
     });
 });
@@ -89,6 +91,43 @@ app.post("/campgrounds", function(req, res){
     });
     //campgrounds.push(newCampground);
     // redirect back to campgrounds page
+});
+
+// ========================
+// COMMENTS ROUTES
+// ========================
+
+app.get("/campgrounds/:id/comments/new", function(req, res){
+	Campground.findById(req.params.id, function(err, campground){
+		if(err){
+			console.log(err);
+		}else{
+			res.render("comments/new", {campground: campground});
+		}
+	});
+});
+
+app.post("/campgrounds/:id/comments", function(req, res){
+	//lookup campground using ID
+	Campground.findById(req.params.id, function(err, campground){
+		if(err){
+			console.log(err);
+			res.redirect("/campgrounds");		
+		}else{
+			Comment.create(req.body.comment, function(err, comment){
+				if(err){
+					console.log(err);
+				}else{
+					campground.comments.push(comment);
+					campground.save();
+					res.redirect('/campgrounds/' + campground._id);
+				}
+			});
+		}
+	});
+	//create new comment
+	//connect new comment to campground
+	//redirect back to show page
 });
 
 //Server is ran on port 8888
