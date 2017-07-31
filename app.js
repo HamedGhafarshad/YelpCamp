@@ -8,14 +8,13 @@ var Comment = require("./models/comment");
 seedDB();
 
 
-
 var uristring = "mongodb://hghafars:trunks123@ds163612.mlab.com:63612/yelp_camp"
 
 //Connecting to our database, will create db if none exist
 
-mongoose.connect("mongodb://localhost/yelp_camp");
+//mongoose.connect("mongodb://localhost/yelp_camp");
 
-/*
+
 mongoose.connect(uristring, function(err, res){
     if(err){
         console.log("error");
@@ -23,7 +22,7 @@ mongoose.connect(uristring, function(err, res){
         console.log("Success");
     }
 });
-*/
+
 
 //Setting up bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -31,7 +30,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 //Don't use EJS suffix when calling res.render()
 app.set("view engine", "ejs");
 
-
+//Connecting to stylesheet
+app.use(express.static(__dirname + "/public"));
+console.log(__dirname);
 //Routes to home page
 app.get("/", function(req, res){
     res.render("landing");

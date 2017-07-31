@@ -13,10 +13,27 @@
 			<div class="thumbnail">
 				<img class="img-responsive" src="<%= campground.image %>">
 				<div class="caption-full">
-					<h4 class="pull-right">Sample Text</h4>
+					<h4 class="pull-right">$100.00/night</h4>
 					<h4><a><%= campground.name %></a></h4>
 					<p><%= campground.description %></p>
 				</div>	
+			</div>
+			<div class ="well">
+				<div class="text-right">
+					<a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+				</div>
+				<hr>
+				<% campground.comments.forEach(function(comment){ %>
+					<div class = "row">
+						<div class="col-md-12">
+							<strong><%= comment.author %></strong>
+							<span class="pull-right">10 days ago</span>
+							<p>
+								<%= comment.text %></p>
+							</p>
+						</div>
+					</div>
+				<% }); %>
 			</div>
 		</div>
 	</div>
@@ -24,13 +41,4 @@
 
 
 
-<p>
-	<a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
-</p>
-
-<% campground.comments.forEach(function(comment){ %>
-	<p>
-		<strong><%= comment.author %></strong> - <%= comment.text %></p>
-	</p>
-<% }); %>
 <% include ../partials/footer %>
