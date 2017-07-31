@@ -33,6 +33,7 @@ app.set("view engine", "ejs");
 //Connecting to stylesheet
 app.use(express.static(__dirname + "/public"));
 console.log(__dirname);
+
 //Routes to home page
 app.get("/", function(req, res){
     res.render("landing");
