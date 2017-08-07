@@ -15,16 +15,16 @@ var uristring = "mongodb://hghafars:trunks123@ds163612.mlab.com:63612/yelp_camp"
 
 //Connecting to our database, will create db if none exist
 
-mongoose.connect("mongodb://localhost/yelp_camp");
+//mongoose.connect("mongodb://localhost/yelp_camp");
 
-//
-//mongoose.connect(uristring, function(err, res){
-//    if(err){
-//        console.log("error");
-//    }else{
-//        console.log("Success");
-//    }
-//});
+
+mongoose.connect(uristring, function(err, res){
+    if(err){
+        console.log("error");
+    }else{
+        console.log("Success");
+    }
+});
 
 
 // Passport Configuration
