@@ -15,18 +15,30 @@ var uristring = "mongodb://hghafars:trunks123@ds163612.mlab.com:63612/yelp_camp"
 
 //Connecting to our database, will create db if none exist
 
-//mongoose.connect("mongodb://localhost/yelp_camp");
+mongoose.connect("mongodb://localhost/yelp_camp");
+
+//
+//mongoose.connect(uristring, function(err, res){
+//    if(err){
+//        console.log("error");
+//    }else{
+//        console.log("Success");
+//    }
+//});
 
 
-mongoose.connect(uristring, function(err, res){
-    if(err){
-        console.log("error");
-    }else{
-        console.log("Success");
-    }
-});
+// Passport Configuration
+app.use(require("express-session")({
+   secret: "Once again Rusty wins cutest dog",
+   resave: false,
+   saveUninitialized: false
+}));
 
-
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 //Setting up bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -133,6 +145,31 @@ app.post("/campgrounds/:id/comments", function(req, res){
 	//create new comment
 	//connect new comment to campground
 	//redirect back to show page
+});
+
+// =========
+//AUTH ROUTES
+// =========
+
+//show register form
+app.get("/register", function(req, res){
+   res.render("register"); 
+});
+
+//handle sign up logic
+app.post("/register", function(req, res){
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err);
+            return res.render("register");
+        }else{
+        passport.authenticate("local")(req, res, function(){
+            res.redirect("/campgrounds"); 
+        });
+        }
+    });   
+ //   res.send("Signing you up..."); 
 });
 
 //Server is ran on port 8888
