@@ -172,6 +172,21 @@ app.post("/register", function(req, res){
  //   res.send("Signing you up..."); 
 });
 
+// show login form
+app.get("/login", function(req, res){
+   res.render("login"); 
+});
+//handling login logic
+//app.post("/login", middleware, callback(unused))
+app.post("/login", passport.authenticate("local", 
+    {
+    
+        successRedirect: "/campgrounds", 
+        failureRedirect: "/login"
+
+    }), function(req, res){
+});
+
 //Server is ran on port 8888
 app.listen(process.env.PORT || 8888, function(){
     console.log("YelpCamp Server Has Started!");
