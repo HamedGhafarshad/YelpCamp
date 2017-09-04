@@ -46,13 +46,10 @@ router.get("/:id", function(req, res){
 });
 
 //EDIT CAMPGROUND ROUTE
-router.get("/:id/edit", function(req, res){
-    Campground.findById(req.params.id, function(err, foundCampground){
-        if(err){
-            res.redirect("/campgrounds");
-        }else{
-            res.render("campgrounds/edit", {campground: foundCampground});
-        }
+router.get("/:id/edit", checkCampgroundOwnership, function(req, res){
+ 
+        Campground.findById(req.params.id, function(err, foundCampground){
+            res.render("campgrounds/edit", {campground: foundCampground});  
     });
 });
 //UPDATE CAMPGROUND ROUTE
@@ -105,6 +102,32 @@ router.post("/", isLoggedIn, function(req, res){
     //campgrounds.push(newCampground);
     // redirect back to campgrounds page
 });
+
+function checkCampgroundOwnership(req, res, next){
+        if(req.isAuthenticated()){
+        //does user own the campground?
+            Campground.findById(req.params.id, function(err, foundCampground){
+            if(err){
+                res.redirect("back");
+            }else{
+                // does the user own the camground ?
+                
+                if(foundCampground.author.id.equals(req.user._id)){
+                    next(); 
+                }else{
+                    res.redirect("back");
+                }
+            }
+            
+            });
+        }else{
+        res.redirect("back");
+    }
+    
+
+    
+}
+
 
 //All routes were added to router so now we export the router
 module.exports = router;
