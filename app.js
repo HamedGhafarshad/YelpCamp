@@ -45,7 +45,7 @@ app.use(require("express-session")({
    saveUninitialized: false
 }));
 
-app.use(function(req, res, next){
+app.use(function(req, res, next){ //Every rout will have res.locals.currentUser available
    res.locals.currentUser = req.user;
     next();
 });
