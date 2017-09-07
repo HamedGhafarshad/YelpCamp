@@ -13,6 +13,28 @@ function isLoggedIn(req, res, next){
     }   
 }
 
+//checkCampgroundOwnership middleware is to check if a user is logged in before editing/deleting and/or displaying edit/delete buttons
+function checkCampgroundOwnership(req, res, next){
+        if(req.isAuthenticated()){
+        //does user own the campground?
+            Campground.findById(req.params.id, function(err, foundCampground){
+            if(err){
+                res.redirect("back");
+            }else{
+                // does the user own the camground ?
+                
+                if(foundCampground.author.id.equals(req.user._id)){
+                    next(); 
+                }else{
+                    res.redirect("back");
+                }
+            }
+            
+            });
+        }else{
+        res.redirect("back");
+    }
+}
 
 //Routes to the campgrounds page
 router.get("/", function(req, res){
@@ -103,30 +125,6 @@ router.post("/", isLoggedIn, function(req, res){
     // redirect back to campgrounds page
 });
 
-function checkCampgroundOwnership(req, res, next){
-        if(req.isAuthenticated()){
-        //does user own the campground?
-            Campground.findById(req.params.id, function(err, foundCampground){
-            if(err){
-                res.redirect("back");
-            }else{
-                // does the user own the camground ?
-                
-                if(foundCampground.author.id.equals(req.user._id)){
-                    next(); 
-                }else{
-                    res.redirect("back");
-                }
-            }
-            
-            });
-        }else{
-        res.redirect("back");
-    }
-    
-
-    
-}
 
 
 //All routes were added to router so now we export the router

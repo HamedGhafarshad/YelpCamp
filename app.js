@@ -10,12 +10,10 @@ var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
 var User = require("./models/user");
 
-//requireing routes
+//requiring routes
 var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
-
-//seedDB(); //seed the database
 
 
 var uristring = "mongodb://hghafars:trunks123@ds163612.mlab.com:63612/yelp_camp"
@@ -45,7 +43,7 @@ app.use(require("express-session")({
    saveUninitialized: false
 }));
 
-app.use(function(req, res, next){ //Every rout will have res.locals.currentUser available
+app.use(function(req, res, next){ //Every route will have res.locals.currentUser available
    res.locals.currentUser = req.user;
     next();
 });
