@@ -91,12 +91,13 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     // redirect back to campgrounds route
     var image = req.body.image;
     var name = req.body.name;
+    var pric = req.body.price;
     var desc = req.body.description;
     var author = {
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground = {name: name, image: image, description : desc, author: author};
+    var newCampground = {name: name, image: image, price: price, description : desc, author: author};
     //Create a new campground and save to DB
     Campground.create(newCampground, function(err, newCreated){
         if(err){
