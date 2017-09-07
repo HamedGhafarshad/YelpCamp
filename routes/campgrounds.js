@@ -29,6 +29,12 @@ router.get("/:id", function(req, res){
         if(err){
             console.log(err);
         } else{
+            
+            if(!foundCampground){
+                req.flash("error", "Item not found!");
+                return res.redirect("back");
+            }
+            
             //render show tempalte with that campground
             res.render("campgrounds/show", {campground: foundCampground, currentUser: req.user});
 	}
@@ -39,6 +45,12 @@ router.get("/:id", function(req, res){
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
  
         Campground.findById(req.params.id, function(err, foundCampground){
+            
+            if(!foundCampground){
+                req.flash("error", "Item not found!");
+                return res.redirect("back");
+            }
+            
             res.render("campgrounds/edit", {campground: foundCampground});  
     });
 });
@@ -49,6 +61,10 @@ router.put("/:id", middleware.checkCampgroundOwnership, function(req, res){
         if(err){
             res.redirect("/campgrounds");
         }else{
+            if(!updatedCampground){
+                req.flash("error", "Item not found!");
+                return res.redirect("back");
+            }
             res.redirect("/campgrounds/" + req.params.id);
         }
     });
@@ -61,6 +77,7 @@ router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res){
         if(err){
             res.redirect("/campgrounds");
         }else{
+            req.flash("success", "Campground successfully deleted!")
             res.redirect("/campgrounds");
         }
     });

@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var flash = require("connect-flash");
 var Campground = require("./models/campground");
 var seedDB = require("./seeds");
 var Comment = require("./models/comment");
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 // Passport Configuration
 app.use(require("express-session")({
@@ -45,7 +47,9 @@ app.use(require("express-session")({
 
 app.use(function(req, res, next){ //Every route will have res.locals.currentUser available
    res.locals.currentUser = req.user;
-    next();
+   res.locals.error = req.flash("error");
+   res.locals.success = req.flash("success");
+   next();
 });
 
 app.use(passport.initialize());

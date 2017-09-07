@@ -13,8 +13,12 @@ var middleware = require("../middleware")
 router.get("/new", middleware.isLoggedIn, function(req, res){
 	Campground.findById(req.params.id, function(err, campground){
 		if(err){
-			console.log(err);
+			req.flash("error", "Something went wrong!");
 		}else{
+            if(!comment){
+                req.flash("error", "Item not found!");
+                return res.redirect("back");
+            }
 			res.render("comments/new", {campground: campground, currentUser: req.user});
 		}
 	});
@@ -25,9 +29,14 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 	//lookup campground using ID
 	Campground.findById(req.params.id, function(err, campground){
 		if(err){
-			console.log(err);
+			req.flash("error", "Something went wrong!");
 			res.redirect("/campgrounds");		
 		}else{
+            if(!campground){
+                req.flash("error", "Item not found!");
+                return res.redirect("back");
+            }
+            
 			Comment.create(req.body.comment, function(err, comment){
 				if(err){
 					console.log(err);
@@ -41,6 +50,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 					campground.comments.push(comment);
 					campground.save();
                     console.log(comment);
+                    res.redirict("/campgrounds/", "Succesfully added comment!");
 					res.redirect('/campgrounds/' + campground._id);
 				}
 			});
@@ -57,6 +67,10 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, 
       if(err){
           res.redirect("back");
       } else{
+          if(!foundComment){
+                req.flash("error", "Item not found!");
+                return res.redirect("back");
+          }
           res.render("comments/edit", {campground_id: req.params.id, comment: foundComment });
 
       }
@@ -70,6 +84,10 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
       if(err){
           res.redirect("back");
       } else {
+          if(!updatedComment){
+                req.flash("error", "Item not found!");
+                return res.redirect("back");
+          }
           res.redirect("/campgrounds/" + req.params.id);
       }
    });
@@ -82,6 +100,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, re
        if(err){
            res.redirect("back");
        } else {
+           req.flash("success", "Comment deleted!")
            res.redirect("/campgrounds/" + req.params.id)
        }
     });
